@@ -1,0 +1,9 @@
+# Bỏ qua mọi thứ
+*
+# Trừ thư mục
+!*/
+# Chỉ giữ những loại này
+!*.cpp
+!*.h
+!*.md
+!.gitignore
