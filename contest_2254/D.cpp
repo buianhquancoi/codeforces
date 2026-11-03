@@ -21,44 +21,41 @@ void boost()
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 }
-ll n, k, a[3][3], t, x, y, b[3][3];
-string s1, s2;
+ll n, k, a[maxn], t, x, y;
+string s;
 void sol()
 {
-    cin >> n >> s1 >> s2;
-    memset(a, 0, sizeof(a));
-    memset(b, 0, sizeof(b));
-    vector<vector<ll>> va(2), vb(2);
-    for (int i = 0; i <= n - 1; i++)
+    map<ll, ll> mp, res;
+    cin >> n;
+    f(i, 1, n)
     {
-        a[i % 2][s1[i] - '0']++;
-        b[i % 2][s2[i] - '0']++;
-        if (s1[i] == '1')
-        {
-            va[i % 2].pb(i);
-        }
-        if (s2[i] == '1')
-        {
-            vb[i % 2].pb(i);
-        }
+        cin >> a[i];
+        mp[a[i]]++;
     }
-    cerr << va[0].size() << " " << va[1].size() << endl;
-    ll res = 0;
-    if (a[1][1] == b[1][1] && a[1][0] == b[1][0] && a[0][0] == b[0][0] && a[0][1] == b[0][1])
+    if ((*mp.begin()).first != 0)
     {
-        f(i, 0, (ll)va[0].size() - 1)
-        {
-            res += abs(va[0][i] - vb[0][i]);
-        }
-        cerr << res;
-        f(i, 0, (ll)va[1].size() - 1)
-        {
-            res += abs(va[1][i] - vb[1][i]);
-        }
-        cout << res / 2 << endl;
+        cout << -1 << endl;
         return;
     }
-    cout << -1 << endl;
+    ll Min = 0;
+    for (auto it = ++mp.begin(); it != mp.end(); ++it)
+    {
+        auto last = prev(it);
+        if (((*it).first - (*last).first) % ((*last).second) != 0 || ((*it).first - (*last).first) / ((*last).second) <= Min)
+        {
+            cout << -1 << endl;
+            return;
+        }
+        res[(*last).first] = ((*it).first - (*last).first) / ((*last).second);
+        Min = ((*it).first - (*last).first) / ((*last).second);
+    }
+    auto it = prev(mp.end(), 2);
+    res[(*mp.rbegin()).first] = res[((*it).first)] + 1;
+    f(i, 1, n)
+    {
+        cout << res[a[i]] << " ";
+    }
+    cout << endl;
 }
 int main()
 {
