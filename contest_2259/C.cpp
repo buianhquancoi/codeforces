@@ -23,49 +23,49 @@ void boost()
 }
 ll n, k, a[maxn], t, x, y;
 string s;
-char c[maxn];
 void sol()
 {
-    ll cnt0 = 0, res = 0;
     cin >> n;
-    string s(n + 1, ' ');
     f(i, 1, n)
     {
         cin >> a[i];
-        if (a[i] == 0)
-        {
-            cnt0++;
-        }
-    }
-    if (cnt0 == 1)
-    {
-        cout << "NO" << endl;
-        return;
     }
     f(i, 1, n)
     {
-        if (a[i] == 0)
+        if (a[i] == 1)
         {
-            s[i] = 'A';
-            f(j, i + 1, n)
-            {
-                if (a[j] == 0)
-                {
-                    s[j] = 'B';
-                }
-            }
+            break;
+        }
+        if (a[i] == -1)
+        {
+            a[i] = 1;
+            break;
+        }
+    }
+    for (ll i = n; i >= 1; i--)
+    {
+        if (a[i] == 1)
+        {
+            break;
+        }
+        if (a[i] == -1)
+        {
+            a[i] = 1;
             break;
         }
     }
     f(i, 1, n)
     {
-        if (s[i] != 'A' && s[i] != 'B')
+        if (a[i] == -1)
         {
-            s[i] = 'C';
+            a[i] = 0;
         }
     }
-    cout << "YES" << endl;
-    cout << s << endl;
+    f(i, 1, n)
+    {
+        cout << a[i] << " ";
+    }
+    cout << endl;
 }
 int main()
 {
